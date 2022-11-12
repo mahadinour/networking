@@ -1,0 +1,38 @@
+package mahadi201902121;
+
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.*;
+public class server {
+    public static void main(String[] args)throws Exception {
+        ServerSocket ss = new ServerSocket(6550);//port address 
+        System.out.println("wating for client...............");
+        System.out.println("connected to server at using port number"+ss.getLocalPort());
+        Socket s = ss.accept();
+        System.out.println("successfully");
+        
+        //data transfer
+        
+        DataInputStream input = new DataInputStream(s.getInputStream());
+        DataOutputStream output= new DataOutputStream(s.getOutputStream());
+        BufferedReader read = new BufferedReader(new InputStreamReader(System.in));
+      
+       String input_str ="";
+       String output_str ="";
+       while(!input_str.equals("stop")){
+           //read
+           input_str = input.readUTF();
+           System.out.println("client says "+input_str);
+           //write
+           output_str = read.readLine();
+           output.writeUTF(output_str);
+       }
+       //connection termination 
+        input.close();
+        ss.close();
+    }
+    
+}
+
