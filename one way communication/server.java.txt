@@ -1,0 +1,26 @@
+package mahadi201902121;
+
+import java.io.DataInputStream;
+import java.net.*;
+public class server {
+    public static void main(String[] args)throws Exception {
+        ServerSocket ss = new ServerSocket(6550);//port address 
+        System.out.println("wating for client...............");
+        Socket s = ss.accept();
+        System.out.println("successfully");
+        
+        //data transfer
+        
+        DataInputStream input = new DataInputStream(s.getInputStream());
+        
+       String str ="";
+       while(!str.equals("stop")){
+           str = input.readUTF();
+           System.out.println("client says "+str);
+       }
+       //connection ermination 
+        input.close();
+        ss.close();
+    }
+    
+}
